@@ -3,7 +3,16 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+/**
+ * a főszereplő, vagyis játékos
+ * @author mark
+ *
+ */
 public class Player extends Character {
+	
+	/**
+	 * konstruktorok. lásd Character, Entity
+	 */
 	public Player(MapWatcher map) {
 		super(map);
 	}
@@ -19,7 +28,10 @@ public class Player extends Character {
 	public Player(String filename, float spd, MapWatcher map) {
 		super(filename, spd, map);
 	}
-
+	
+	/**
+	 * leellenőrzi a gombok lenyomását, és azoknak megfelelően mozog.
+	 */
 	@Override
 	public void step(float delta) {
 		super.step(delta);

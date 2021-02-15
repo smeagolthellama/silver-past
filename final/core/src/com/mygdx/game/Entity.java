@@ -5,25 +5,53 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * alaposztálya mindennek, aminek van képe és pozíciója (a térképet kivéve)	
+ * @author mark
+ *
+ */
 public class Entity {
-	///teglalap, amiben talalhato a dolog
+	/**
+	 * teglalap, amiben talalhato az Entity
+	 */
 	public Rectangle rect;
-	///képe a dolognak
+	/**
+	 * képe az ntitásnak
+	 */
 	public Texture image;
-	///az allomany neve, kiterjesztes nelkul.
+	/**
+	 * az allomany neve, kiterjesztes nelkul.
+	 */
 	protected String basename;
-	///ha animalt, akkor itt talalhatoak az egyedi kepek.
+	/**
+	 * ha animalt, akkor itt talalhatoak az egyedi kepek.
+	 */
 	protected Texture[] frames;
-	///alapertelmezetten nem animalt.
+	/**
+	 * alapertelmezetten nem animalt.
+	 */
 	protected boolean animated=false;
-	///az animacio sebessege. egy kepet milyen sokaig mutat?
+	/**
+	 * az animacio sebessege. egy kepet milyen sokaig mutat?
+	 */
 	public float animationstep;
-	///jelenlegi kep indexe
+	/**
+	 * jelenlegi kep indexe
+	 */
 	protected int currentframe;
-	///oda-vissza, vagy ciklikus az animacio?
+	/**
+	 * oda-vissza, vagy ciklikus az animacio?
+	 */
 	public boolean zigzag=false;
-	///menyi idő telt el az utolsó animációkép óta
-	protected float time;
+	/**
+	 * menyi idő telt el az utolsó animációkép óta
+	 */
+	protected float animationsteptime;
+
+	/**
+	 * mennyi ideje létezik az entitás
+	 */
+	protected float absoluteTime;
 	
 	/**alapertelmezett konstruktor
 	 * ad egy alapertelmezett kepet (badlogic_small.jpg, 64x64) , es a 0,0 koordinatara helyezi az entitast.
@@ -105,10 +133,11 @@ public class Entity {
 	 * @param delta menyi másodperc telt el azóta, hogy legutóbb meg lett hívva ez a függvény
 	 */
 	public void step(float delta) {
+		absoluteTime+=delta;
 		if(animated) {
-			time+=delta;
-			if(time>animationstep) {
-				time-=animationstep;
+			animationsteptime+=delta;
+			if(animationsteptime>animationstep) {
+				animationsteptime-=animationstep;
 				currentframe++;
 				if(!zigzag) {
 					image=frames[currentframe%frames.length];
